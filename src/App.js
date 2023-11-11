@@ -23,7 +23,6 @@ function App() {
         <button
           onClick={() => {
             setMiles(userInput * 0.62);
-            set(ref(database, "/converter"), miles);
           }}
         >
           Convert
