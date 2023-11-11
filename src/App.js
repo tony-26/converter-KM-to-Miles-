@@ -7,6 +7,8 @@ import { database } from "./firebase";
 function App() {
   const [miles, setMiles] = useState(0);
   const [userInput, setUserInput] = useState("");
+  const [kmValue, setKmValue] = useState(0);
+  const km = userInput;
   return (
     <div className="App">
       <header>
@@ -23,13 +25,14 @@ function App() {
         <button
           onClick={() => {
             setMiles(userInput * 0.62);
+            setKmValue(userInput);
           }}
         >
           Convert
         </button>
       </body>
       <h2>
-        {userInput} KM = {miles} miles
+        {kmValue} KM = {miles} miles
       </h2>
     </div>
   );
