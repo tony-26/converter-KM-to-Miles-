@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { useState } from "react";
 
 function App() {
+  const [miles, setMiles] = useState(0);
+  const [userInput, setUserInput] = useState("");
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h1>KM to Miles Converter</h1>
       </header>
+      <body>
+        <h3>Please enter the distance in KM</h3>
+        <input
+          onChange={(e) => {
+            setUserInput(e.target.value);
+          }}
+          value={userInput}
+        ></input>
+        <button
+          onClick={() => {
+            setMiles(userInput * 0.62);
+          }}
+        >
+          Convert
+        </button>
+      </body>
+      <h2>
+        {userInput} KM = {miles} miles
+      </h2>
     </div>
   );
 }
