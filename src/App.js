@@ -1,8 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
-import { set, ref } from "firebase/database";
-import { database } from "./firebase";
 
 function App() {
   const [miles, setMiles] = useState(0);
