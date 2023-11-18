@@ -51,9 +51,9 @@ function App() {
           value={selector1}
           onChange={(e) => setSelector1(e.target.value)}
         >
-          {Object.keys(toMeters).map((unit) => (
-            <option key={unit} value={unit}>
-              {unit}
+          {Object.keys(toMeters).map((e) => (
+            <option key={e} value={e}>
+              {e}
             </option>
           ))}
         </select>
@@ -68,9 +68,9 @@ function App() {
           value={selector2}
           onChange={(e) => setSelector2(e.target.value)}
         >
-          {Object.keys(toMeters).map((unit) => (
-            <option key={unit} value={unit}>
-              {unit}
+          {Object.keys(toMeters).map((e) => (
+            <option key={e} value={e}>
+              {e}
             </option>
           ))}
         </select>

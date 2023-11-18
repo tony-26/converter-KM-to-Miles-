@@ -1,9 +1,6 @@
 export default (table, unit1, unit2) => {
-  const table = { Miles_KM: 1.6, KM_Miles: 0.62 };
-  if (unit1 === unit2) {
-    return 1;
-  } else {
-    const key = unit1 + "_" + unit2;
-    return conversions[key];
-  }
+  const valueOfOneUnit1 = table[unit1];
+  const valueOfOneUnit2 = table[unit2];
+  const conversionRate = valueOfOneUnit1 / valueOfOneUnit2;
+  return conversionRate;
 };
