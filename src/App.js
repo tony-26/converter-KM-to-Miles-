@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState } from "react";
+import getConversionRate from "./lib/getConversionRate";
 
 // function App() {
 //   const [userInput, setUserInput] = useState(0);
@@ -17,9 +18,12 @@ import { useState } from "react";
 //   };
 function App() {
   const [userInput, setUserInput] = useState(0);
-  const [selector1, setSelector1] = useState("Meters");
-  const [selector2, setSelector2] = useState("Meters");
+  const [unitSelector, setUnitSelector] = useState("toCurrency"); //changed
+  const [selector1, setSelector1] = useState("USD"); //changed
+  const [selector2, setSelector2] = useState("USD"); //changed
   const [convertedValue, setConvertedValue] = useState(0);
+
+  const units = ["toMeters", "toCurrency"];
 
   //set meters as a standard unit, converting others to meters first
   const toMeters = {
@@ -33,10 +37,26 @@ function App() {
     Meters: 1,
   };
 
+  const toCurrency = {
+    CNY: 0.14673,
+    EUR: 1.1356,
+    GBP: 1.2893,
+    JPY: 0.006687,
+    USD: 1,
+  };
+
   const convertDistance = () => {
-    const valueInMeters = userInput * toMeters[selector1];
-    const targetValue = valueInMeters / toMeters[selector2];
-    setConvertedValue(targetValue);
+    if (unitSelector === "toMeters") {
+      const conversionRate = getConversionRate(toMeters, selector1, selector2);
+      setConvertedValue(userInput * conversionRate);
+    } else if (unitSelector === "toCurrency") {
+      const conversionRate = getConversionRate(
+        toCurrency,
+        selector1,
+        selector2
+      );
+      setConvertedValue(userInput * conversionRate);
+    }
   };
 
   return (
@@ -47,15 +67,30 @@ function App() {
       <body>
         <h3>Please enter the distance</h3>
 
+        {/* <select
+          value={unitSelector}
+          onChange={(e) => {
+            setUnitSelector(e.target.value);
+          }}
+        >
+          {units.map((e, i) => {
+            return <option key={i}>{e}</option>;
+          })}
+        </select> */}
+
         <select
           value={selector1}
           onChange={(e) => setSelector1(e.target.value)}
         >
-          {Object.keys(toMeters).map((e) => (
-            <option key={e} value={e}>
-              {e}
-            </option>
-          ))}
+          {Object.keys(toCurrency).map(
+            (
+              e //changed
+            ) => (
+              <option key={e} value={e}>
+                {e}
+              </option>
+            )
+          )}
         </select>
 
         <input
@@ -68,11 +103,15 @@ function App() {
           value={selector2}
           onChange={(e) => setSelector2(e.target.value)}
         >
-          {Object.keys(toMeters).map((e) => (
-            <option key={e} value={e}>
-              {e}
-            </option>
-          ))}
+          {Object.keys(toCurrency).map(
+            (
+              e //changed
+            ) => (
+              <option key={e} value={e}>
+                {e}
+              </option>
+            )
+          )}
         </select>
 
         <button onClick={convertDistance}>Convert</button>
