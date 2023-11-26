@@ -3,26 +3,36 @@ import { useState } from "react";
 import getConversionRate from "./lib/getConversionRate";
 
 function App() {
-  // const conversionTable = {
-  //   CNY: 0.14673,
-  //   EUR: 1.1356,
-  //   GBP: 1.2893,
-  //   JPY: 0.006687,
-  //   USD: 1,
-  //   baseUnit: "USD",
-  // };
-  const conversionTable = {
-    Miles: 1609.34,
-    KM: 1000,
-    Yards: 0.9144,
-    Feet: 0.3048,
-    Inches: 0.0254,
-    CM: 0.01,
-    MM: 0.001,
-    Meters: 1,
-    baseUnit: "Meters",
-  };
+  const conversionTables = [
+    {
+      CNY: 0.14673,
+      EUR: 1.1356,
+      GBP: 1.2893,
+      JPY: 0.006687,
+      USD: 1,
+      baseUnit: "USD",
+    },
 
+    {
+      Miles: 1609.34,
+      KM: 1000,
+      Yards: 0.9144,
+      Feet: 0.3048,
+      Inches: 0.0254,
+      CM: 0.01,
+      MM: 0.001,
+      Meters: 1,
+      baseUnit: "Meters",
+    },
+    {
+      Liters: 1,
+      Pints: 0.651,
+      ML: 0.001,
+      baseUnit: "Liters",
+    },
+  ];
+
+  const [conversionTable, setConversionTable] = useState(conversionTables[0]);
   const [userInput, setUserInput] = useState(0);
   const [selector1, setSelector1] = useState(conversionTable.baseUnit);
   const [selector2, setSelector2] = useState(conversionTable.baseUnit);
@@ -45,16 +55,21 @@ function App() {
       <body>
         <h3>Please enter the distance</h3>
 
-        {/* <select
-          value={unitSelector}
+        <select
           onChange={(e) => {
-            setUnitSelector(e.target.value);
+            setConversionTable(conversionTables[e.target.value]);
+            setSelector1(conversionTables[e.target.value].baseUnit);
+            setSelector2(conversionTables[e.target.value].baseUnit);
           }}
         >
-          {units.map((e, i) => {
-            return <option key={i}>{e}</option>;
+          {conversionTables.map((e, i) => {
+            return (
+              <option key={i} value={i}>
+                {e.baseUnit}
+              </option>
+            );
           })}
-        </select> */}
+        </select>
 
         <select
           value={selector1}
