@@ -2,31 +2,16 @@ import "./App.css";
 import { useState } from "react";
 import getConversionRate from "./lib/getConversionRate";
 
-// function App() {
-//   const [userInput, setUserInput] = useState(0);
-//   const [selector1, setSelector1] = useState("Miles");
-//   const [selector2, setSelector2] = useState("Miles");
-//   const [convertedValue, setConvertedValue] = useState(0);
-//   const conversions = { Miles_KM: 1.6, KM_Miles: 0.62 };
-//   const convertDistance = () => {
-//     if (selector1 === selector2) {
-//       setConvertedValue(userInput); // No conversion needed
-//     } else {
-//       const key = selector1 + "_" + selector2;
-//       setConvertedValue(userInput * conversions[key]);
-//     }
-//   };
 function App() {
-  const [userInput, setUserInput] = useState(0);
-  const [unitSelector, setUnitSelector] = useState("toCurrency"); //changed
-  const [selector1, setSelector1] = useState("USD"); //changed
-  const [selector2, setSelector2] = useState("USD"); //changed
-  const [convertedValue, setConvertedValue] = useState(0);
-
-  const units = ["toMeters", "toCurrency"];
-
-  //set meters as a standard unit, converting others to meters first
-  const toMeters = {
+  // const conversionTable = {
+  //   CNY: 0.14673,
+  //   EUR: 1.1356,
+  //   GBP: 1.2893,
+  //   JPY: 0.006687,
+  //   USD: 1,
+  //   baseUnit: "USD",
+  // };
+  const conversionTable = {
     Miles: 1609.34,
     KM: 1000,
     Yards: 0.9144,
@@ -35,28 +20,21 @@ function App() {
     CM: 0.01,
     MM: 0.001,
     Meters: 1,
+    baseUnit: "Meters",
   };
 
-  const toCurrency = {
-    CNY: 0.14673,
-    EUR: 1.1356,
-    GBP: 1.2893,
-    JPY: 0.006687,
-    USD: 1,
-  };
+  const [userInput, setUserInput] = useState(0);
+  const [selector1, setSelector1] = useState(conversionTable.baseUnit);
+  const [selector2, setSelector2] = useState(conversionTable.baseUnit);
+  const [convertedValue, setConvertedValue] = useState(0);
 
   const convertDistance = () => {
-    if (unitSelector === "toMeters") {
-      const conversionRate = getConversionRate(toMeters, selector1, selector2);
-      setConvertedValue(userInput * conversionRate);
-    } else if (unitSelector === "toCurrency") {
-      const conversionRate = getConversionRate(
-        toCurrency,
-        selector1,
-        selector2
-      );
-      setConvertedValue(userInput * conversionRate);
-    }
+    const conversionRate = getConversionRate(
+      conversionTable,
+      selector1,
+      selector2
+    );
+    setConvertedValue(userInput * conversionRate);
   };
 
   return (
@@ -82,15 +60,11 @@ function App() {
           value={selector1}
           onChange={(e) => setSelector1(e.target.value)}
         >
-          {Object.keys(toCurrency).map(
-            (
-              e //changed
-            ) => (
-              <option key={e} value={e}>
-                {e}
-              </option>
-            )
-          )}
+          {Object.keys(conversionTable).map((e) => (
+            <option key={e} value={e}>
+              {e}
+            </option>
+          ))}
         </select>
 
         <input
@@ -103,15 +77,11 @@ function App() {
           value={selector2}
           onChange={(e) => setSelector2(e.target.value)}
         >
-          {Object.keys(toCurrency).map(
-            (
-              e //changed
-            ) => (
-              <option key={e} value={e}>
-                {e}
-              </option>
-            )
-          )}
+          {Object.keys(conversionTable).map((e) => (
+            <option key={e} value={e}>
+              {e}
+            </option>
+          ))}
         </select>
 
         <button onClick={convertDistance}>Convert</button>
