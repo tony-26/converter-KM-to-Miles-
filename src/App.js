@@ -2,6 +2,8 @@ import "./App.css";
 import { useState } from "react";
 import getConversionRate from "./lib/getConversionRate";
 import UnitSelector from "./Components/UnitSelector";
+import QuantityInput from "./Components/QuantityInput";
+import TableSelector from "./Components/TableSelector";
 
 function App() {
   const conversionTables = [
@@ -62,47 +64,33 @@ function App() {
       <header>
         <h1>{conversionTable.description}</h1>
       </header>
-      <body>
-        <select
-          onChange={(e) => {
-            setConversionTable(conversionTables[e.target.value]);
-            setSelector1(conversionTables[e.target.value].baseUnit);
-            setSelector2(conversionTables[e.target.value].baseUnit);
-          }}
-        >
-          {conversionTables.map((e, i) => {
-            return (
-              <option key={i} value={i}>
-                {e.baseUnit}
-              </option>
-            );
-          })}
-        </select>
 
-        <UnitSelector
-          selector={selector1}
-          setSelector={setSelector1}
-          conversionTable={conversionTable}
-        />
+      <TableSelector
+        conversionTables={conversionTables}
+        setConversionTable={setConversionTable}
+        setSelector1={setSelector1}
+        setSelector2={setSelector2}
+      />
 
-        <input
-          type="number"
-          onChange={(e) => setUserInput(e.target.value)}
-          value={userInput}
-        />
+      <UnitSelector
+        selector={selector1}
+        setSelector={setSelector1}
+        conversionTable={conversionTable}
+      />
 
-        <UnitSelector
-          selector={selector2}
-          setSelector={setSelector2}
-          conversionTable={conversionTable}
-        />
+      <QuantityInput userInput={userInput} setUserInput={setUserInput} />
 
-        <button onClick={convertDistance}>Convert</button>
+      <UnitSelector
+        selector={selector2}
+        setSelector={setSelector2}
+        conversionTable={conversionTable}
+      />
 
-        <h2>
-          {convertedValue} {selector2}
-        </h2>
-      </body>
+      <button onClick={convertDistance}>Convert</button>
+
+      <h2>
+        {convertedValue} {selector2}
+      </h2>
     </div>
   );
 }
