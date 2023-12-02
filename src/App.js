@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import getConversionRate from "./lib/getConversionRate";
+import UnitSelector from "./Components/UnitSelector";
 
 function App() {
   const conversionTables = [
@@ -46,14 +47,6 @@ function App() {
   const [selector2, setSelector2] = useState(conversionTables[0].baseUnit);
   const [convertedValue, setConvertedValue] = useState(0);
 
-  // const convertDistance = () => {
-  //   const conversionRate = getConversionRate(
-  //     conversionTable.table,
-  //     selector1,
-  //     selector2
-  //   );
-  //   setConvertedValue(userInput * conversionRate);
-  // };
   const convertDistance = () => {
     const conversionRate = getConversionRate(
       conversionTable.table,
@@ -86,16 +79,11 @@ function App() {
           })}
         </select>
 
-        <select
-          value={selector1}
-          onChange={(e) => setSelector1(e.target.value)}
-        >
-          {Object.keys(conversionTable.table).map((e) => (
-            <option key={e} value={e}>
-              {e}
-            </option>
-          ))}
-        </select>
+        <UnitSelector
+          selector={selector1}
+          setSelector={setSelector1}
+          conversionTable={conversionTable}
+        />
 
         <input
           type="number"
@@ -103,16 +91,11 @@ function App() {
           value={userInput}
         />
 
-        <select
-          value={selector2}
-          onChange={(e) => setSelector2(e.target.value)}
-        >
-          {Object.keys(conversionTable.table).map((e) => (
-            <option key={e} value={e}>
-              {e}
-            </option>
-          ))}
-        </select>
+        <UnitSelector
+          selector={selector2}
+          setSelector={setSelector2}
+          conversionTable={conversionTable}
+        />
 
         <button onClick={convertDistance}>Convert</button>
 
