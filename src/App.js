@@ -3,35 +3,6 @@ import { useState } from "react";
 import getConversionRate from "./lib/getConversionRate";
 
 function App() {
-  // const conversionTables = [
-  //   {
-  //     CNY: 0.14673,
-  //     EUR: 1.1356,
-  //     GBP: 1.2893,
-  //     JPY: 0.006687,
-  //     USD: 1,
-  //     baseUnit: "USD",
-  //   },
-
-  //   {
-  //     Miles: 1609.34,
-  //     KM: 1000,
-  //     Yards: 0.9144,
-  //     Feet: 0.3048,
-  //     Inches: 0.0254,
-  //     CM: 0.01,
-  //     MM: 0.001,
-  //     Meters: 1,
-  //     baseUnit: "Meters",
-  //   },
-  //   {
-  //     Liters: 1,
-  //     Pints: 0.651,
-  //     ML: 0.001,
-  //     baseUnit: "Liters",
-  //   },
-  // ];
-
   const conversionTables = [
     {
       description: "Currency conversions",
@@ -75,13 +46,22 @@ function App() {
   const [selector2, setSelector2] = useState(conversionTables[0].baseUnit);
   const [convertedValue, setConvertedValue] = useState(0);
 
+  // const convertDistance = () => {
+  //   const conversionRate = getConversionRate(
+  //     conversionTable.table,
+  //     selector1,
+  //     selector2
+  //   );
+  //   setConvertedValue(userInput * conversionRate);
+  // };
   const convertDistance = () => {
     const conversionRate = getConversionRate(
       conversionTable.table,
       selector1,
       selector2
     );
-    setConvertedValue(userInput * conversionRate);
+    const result = (userInput * conversionRate).toFixed(2);
+    setConvertedValue(result);
   };
 
   return (
@@ -90,8 +70,6 @@ function App() {
         <h1>{conversionTable.description}</h1>
       </header>
       <body>
-        {/* <h3>Please enter the distance</h3> */}
-
         <select
           onChange={(e) => {
             setConversionTable(conversionTables[e.target.value]);
